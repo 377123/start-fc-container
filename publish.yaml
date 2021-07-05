@@ -2,7 +2,7 @@ Type: Application
 Name: start-fc-container
 Provider:
   - 阿里云
-Version: 0.0.2
+Version: 0.0.3
 Description: 快速部署一个容器镜像到阿里云函数计算
 HomePage: https://github.com/devsapp/start-fc-container
 Tags:
