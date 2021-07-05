@@ -1,0 +1,38 @@
+edition: 1.0.0
+name: fcDeployApp
+access: "{{ access }}"
+
+services:
+  HelloWorld:
+    component: devsapp/fc
+    actions: # The custom execution logic.
+      pre-deploy: # Executed before deploy is run.
+        - run: s build --use-docker
+          path: ./code
+    props:
+      region: cn-shanghai
+      service:
+        name: custom-container-test
+        description: demo for custom-container-test
+      function:
+        name: custom-container-function
+        runtime: custom-container
+        caPort: 8080
+        codeUri: ./code
+        customContainerConfig:
+          image: 'registry.cn-shanghai.aliyuncs.com/custom-container/test:0.0.1'
+          command: '["node"]'
+          args: '["server.js"]'
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+      customDomains:
+        - domainName: auto
+          protocol: HTTP
+          routeConfigs:
+            - path: /*
